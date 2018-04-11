@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>107校內技藝競賽 - 電子競技報名</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="main.css">
+    <script>
+        $(function(){
+            function getFormData($form){
+                var unindexed_array = $form.serializeArray();
+                var indexed_array = {};
+                $.map(unindexed_array, function(n, i){
+                    indexed_array[n['name']] = n['value'];
+                });
+                return indexed_array;
+            }
+            $('#signUpForm').on('submit',function(){
+                var form = getFormData($(this));
+                $.ajax({
+                    url:'signUpProcess.php',
+                    method:'POST',
+                    data:form,
+                    success:function(result){
+                        console.log(result);
+                    },
+                    error:function(err){
+                        console.log(err);
+                    }
+                })
+                $("#signUp").modal('hide');
+                $("#signUpForm")[0].reset();
+                return false;
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>107校內技藝競賽 - 電子競技報名</header>
+        <button class="btn btn-default" data-toggle="modal" data-target="#signUp">按我報名</button>
+        
+    </div>
+
+    <div class="modal fade" id="signUp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">電子競技報名表</h4>
+        </div>
+        <form method="POST" id="signUpForm">
+            <div class="modal-body">
+                科系
+                <select name="department" class="form-control">
+                    <option value="資料處理科">資料處理科</option>
+                    <option value="時尚造型科">時尚造型科</option>
+                    <option value="商業經營科">商業經營科</option>
+                    <option value="觀光事業科">觀光事業科</option>
+                    <option value="餐飲管理科">餐飲管理科</option>
+                    <option value="多媒體設計科">多媒體設計科</option>
+                    <option value="建教班">建教班</option>
+                    <option value="普通科">普通科</option>
+                    <option value="綜合科">綜合科</option>
+                </select>
+                班級<input type="text" class="form-control" name="_class" required>
+                隊名：<input type="text" class="form-control" name="teamName" required>
+                隊長(座號姓名)：<input type="text" class="form-control" name="leaderName" required>
+                隊長(遊戲暱稱)：<input type="text" class="form-control" name="leaderId" required>
+                隊員一(座號姓名)：<input type="text" class="form-control" name="member[]">
+                隊員二(座號姓名)：<input type="text" class="form-control" name="member[]">
+                隊員三(座號姓名)：<input type="text" class="form-control" name="member[]">
+                隊員四(座號姓名)：<input type="text" class="form-control" name="member[]">
+                候補(座號姓名)：<input type="text" class="form-control" name="member[]">
+                隊長LineID：<span style="color:red">(ID將作為修改報名表的密碼，請謹慎輸入)</span><input type="text" class="form-control" name="line_id" required>
+                隊長聯絡電話：<input type="text" class="form-control" name="phone" required>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">確定報名</button>
+            </div>
+        </form>
+        </div>
+    </div>
+    </div>
+</body>
+</html>
