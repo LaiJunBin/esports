@@ -115,6 +115,7 @@
                     data: form,
                     success: function () {
                         alert('報名成功!');
+                        location.reload();
                     },
                     error: function (err) {
                         alert('報名沒有成功，請重新報名或詢問電競社社長');
@@ -126,7 +127,35 @@
                 $("#memberDiv *").hide().prop('disabled', true);
                 return false;
             });
-            $("#statusMain").load('status.php');
+            $("#statusMain").load('status.php',function(){
+                $(".modifyBtn,.deleteBtn").click(function(){
+                    var index = $(this).attr('va');
+                    var uri = $(this).attr('uri');
+                    var userInput = prompt('請輸入LineId');
+                    if(userInput != null){
+                        $.ajax({
+                            url:'verificationId.php',
+                            data:{
+                                'userInput':userInput,
+                                'index':index,
+                                'uri':uri
+                            },
+                            method:'POST',
+                            dataType:'json',
+                            success:function(result){
+                                if(result.status == 'OK'){
+                                    location.href = result.url;
+                                }else
+                                    alert('ID錯誤!');
+                            },
+                            error:function(err){
+                                alert('錯誤，請稍後在試或連繫電競社社長')
+                                console.log(err);
+                            }
+                        });
+                    }
+                });
+            });
             
         });
     </script>

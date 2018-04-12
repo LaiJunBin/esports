@@ -9,7 +9,7 @@ header{
     user-select:none;
 }
 
-.container>header~button{
+.container>header~.btn{
     width:100%;
     margin:5px 0;
 }
