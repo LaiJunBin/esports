@@ -159,7 +159,15 @@
                     }
                 });
             });
-            
+            $(window).resize(layout);
+            function layout(){
+                if($(document).width() <=480){
+                    $("header").css('height','70px').html('107校內技藝競賽 <br> 電子競技報名狀態');
+                }else{
+                    $("header").css('height','35px').html('107校內技藝競賽 - 電子競技報名狀態');
+                }
+            }
+            layout();
         });
     </script>
 </head>
