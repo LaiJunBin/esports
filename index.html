@@ -82,6 +82,9 @@
                                 }
                             })
                         });
+                        $("#managerBtn").click(function(){
+                            
+                        });
                     }
                 }
             });
@@ -131,7 +134,7 @@
                 $(".modifyBtn,.deleteBtn").click(function(){
                     var index = $(this).attr('va');
                     var uri = $(this).attr('uri');
-                    var userInput = prompt('請輸入LineId');
+                    var userInput = prompt('請輸入LineId(管理員免填)');
                     if(userInput != null){
                         $.ajax({
                             url:'verificationId.php',
