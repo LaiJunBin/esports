@@ -15,8 +15,58 @@
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="main.css">
     <script>
-        var form = null;
         $(function () {
+            $.ajax({
+                url: 'isLogin.php',
+                success: function (result) {
+                    if (result == false) {
+                        $("#signUpBtn").before(
+                            '<button class="btn btn-info" data-toggle="modal" data-target="#signIn">管理者登入</button>'
+                        );
+                        $("body").append($("<div>").load('signIn.html', function () {
+                            $("#signInForm").on('submit', function () {
+                                var form = getFormData($(this));
+                                $.ajax({
+                                    url: 'loginProcess.php',
+                                    method: 'POST',
+                                    data: form,
+                                    success: function (result) {
+                                        if (result == true) {
+                                            alert('登入成功');
+                                            $("#signIn").modal(
+                                                'hide');
+                                            $("#signInForm")[0].reset();
+                                            location.reload();
+                                        } else {
+                                            alert('帳號或密碼錯誤!');
+                                        }
+                                    },
+                                    error: function (err) {
+                                        alert('登入錯誤!');
+                                        console.log(err);
+                                    }
+                                });
+                                return false;
+
+                            });
+                        }))
+                    } else {
+                        $("#signUpBtn").before(
+                            '<button class="btn btn-danger" id="logoutBtn">登出</button>');
+                        $("#logoutBtn").click(function () {
+                            $.ajax({
+                                url: 'logout.php',
+                                success: function (result) {
+                                    if (result == true) {
+                                        alert('登出成功');
+                                        location.reload();
+                                    }
+                                }
+                            })
+                        });
+                    }
+                }
+            });
             $("#memberDiv *").hide().prop('disabled', true);
 
             function getFormData($form) {
@@ -54,16 +104,17 @@
                 });
                 if (!checkFormat)
                     return false;
-                form = getFormData($(this));
+                var form = getFormData($(this));
                 $.ajax({
                     url: 'signUpProcess.php',
                     method: 'POST',
                     data: form,
-                    success: function (result) {
+                    success: function () {
                         alert('報名成功!');
                     },
                     error: function (err) {
                         alert('報名沒有成功，請重新報名或詢問電競社社長');
+                        console.log(err);
                     }
                 });
                 $("#signUp").modal('hide');
@@ -71,6 +122,8 @@
                 $("#memberDiv *").hide().prop('disabled', true);
                 return false;
             });
+
+
         });
     </script>
 </head>
@@ -78,9 +131,11 @@
 <body>
     <div class="container">
         <header>107校內技藝競賽 - 電子競技報名狀態</header>
-        <button class="btn btn-default" data-toggle="modal" data-target="#signUp">按我報名</button>
+        <button class="btn btn-default" id="signUpBtn" data-toggle="modal" data-target="#signUp">按我報名</button>
 
     </div>
+
+
 
     <div class="modal fade" id="signUp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
