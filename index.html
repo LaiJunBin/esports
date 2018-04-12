@@ -16,6 +16,21 @@
     <link rel="stylesheet" href="main.css">
     <script>
         $(function () {
+            function getFormData($form) {
+                var unindexed_array = $form.serializeArray();
+                var indexed_array = {};
+                $.map(unindexed_array, function (n, i) {
+                    if (Object.keys(indexed_array).indexOf(n['name']) == -1)
+                        indexed_array[n['name']] = n['value'];
+                    else if (indexed_array[n['name']] instanceof Array)
+                        indexed_array[n['name']].push(n['value']);
+                    else {
+                        indexed_array[n['name']] = [indexed_array[n['name']]];
+                        indexed_array[n['name']].push(n['value']);
+                    }
+                });
+                return indexed_array;
+            }
             $.ajax({
                 url: 'isLogin.php',
                 success: function (result) {
@@ -23,8 +38,9 @@
                         $("#signUpBtn").before(
                             '<button class="btn btn-info" data-toggle="modal" data-target="#signIn">管理者登入</button>'
                         );
-                        $("body").append($("<div>").load('signIn.html', function () {
-                            $("#signInForm").on('submit', function () {
+                        $("body").append($("<div>").load('signIn.html',function(){
+                                $("#signInForm").on('submit', function () {
+                
                                 var form = getFormData($(this));
                                 $.ajax({
                                     url: 'loginProcess.php',
@@ -47,12 +63,14 @@
                                     }
                                 });
                                 return false;
-
+                        
                             });
-                        }))
+                        }));
                     } else {
                         $("#signUpBtn").before(
                             '<button class="btn btn-danger" id="logoutBtn">登出</button>');
+                        $("#logoutBtn").before(
+                            '<button class="btn btn-warning" id="managerBtn">管理者專區</button>');
                         $("#logoutBtn").click(function () {
                             $.ajax({
                                 url: 'logout.php',
@@ -69,21 +87,7 @@
             });
             $("#memberDiv *").hide().prop('disabled', true);
 
-            function getFormData($form) {
-                var unindexed_array = $form.serializeArray();
-                var indexed_array = {};
-                $.map(unindexed_array, function (n, i) {
-                    if (Object.keys(indexed_array).indexOf(n['name']) == -1)
-                        indexed_array[n['name']] = n['value'];
-                    else if (indexed_array[n['name']] instanceof Array)
-                        indexed_array[n['name']].push(n['value']);
-                    else {
-                        indexed_array[n['name']] = [indexed_array[n['name']]];
-                        indexed_array[n['name']].push(n['value']);
-                    }
-                });
-                return indexed_array;
-            }
+            
             $("#memberCount").change(function () {
                 var n = $(this).val();
                 $("#memberDiv *").hide().prop('disabled', true).prop('required', false);
@@ -122,8 +126,8 @@
                 $("#memberDiv *").hide().prop('disabled', true);
                 return false;
             });
-
-
+            $("#statusMain").load('status.php');
+            
         });
     </script>
 </head>
@@ -132,7 +136,9 @@
     <div class="container">
         <header>107校內技藝競賽 - 電子競技報名狀態</header>
         <button class="btn btn-default" id="signUpBtn" data-toggle="modal" data-target="#signUp">按我報名</button>
+        <main id="statusMain">
 
+        </main>
     </div>
 
 
@@ -160,7 +166,7 @@
                             <option value="普通科">普通科</option>
                             <option value="綜合科">綜合科</option>
                         </select>
-                        班級
+                        年級班級
                         <input type="text" class="form-control" name="_class" required> 隊名：
                         <input type="text" class="form-control" name="teamName" required> 隊長(座號姓名)：
                         <input type="text" class="form-control" name="leaderName" required> 隊長(遊戲暱稱)：
