@@ -3,7 +3,7 @@
     $user = $_POST['username'];
     $pwd = $_POST['password'];
 
-    if($user == '帳號' && $pwd == '密碼'){
+    if($user == 'admin' && $pwd == '1234'){
         $_SESSION['login'] = $user;
         echo true;
     }else{

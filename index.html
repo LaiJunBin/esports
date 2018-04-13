@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>107校內技藝競賽 - 電子競技報名狀態</title>
+    <title>106校內技藝競賽 - 電子競技報名狀態</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
@@ -38,9 +38,9 @@
                         $("#signUpBtn").before(
                             '<button class="btn btn-info" data-toggle="modal" data-target="#signIn">管理者登入</button>'
                         );
-                        $("body").append($("<div>").load('signIn.html',function(){
-                                $("#signInForm").on('submit', function () {
-                
+                        $("body").append($("<div>").load('signIn.html', function () {
+                            $("#signInForm").on('submit', function () {
+
                                 var form = getFormData($(this));
                                 $.ajax({
                                     url: 'loginProcess.php',
@@ -63,7 +63,7 @@
                                     }
                                 });
                                 return false;
-                        
+
                             });
                         }));
                     } else {
@@ -82,15 +82,15 @@
                                 }
                             })
                         });
-                        $("#managerBtn").click(function(){
-                            
+                        $("#managerBtn").click(function () {
+
                         });
                     }
                 }
             });
             $("#memberDiv *").hide().prop('disabled', true);
 
-            
+
             $("#memberCount").change(function () {
                 var n = $(this).val();
                 $("#memberDiv *").hide().prop('disabled', true).prop('required', false);
@@ -130,28 +130,28 @@
                 $("#memberDiv *").hide().prop('disabled', true);
                 return false;
             });
-            $("#statusMain").load('status.php',function(){
-                $(".modifyBtn,.deleteBtn").click(function(){
+            $("#statusMain").load('status.php', function () {
+                $(".modifyBtn,.deleteBtn").click(function () {
                     var index = $(this).attr('va');
                     var uri = $(this).attr('uri');
                     var userInput = prompt('請輸入LineId(管理員免填)');
-                    if(userInput != null){
+                    if (userInput != null) {
                         $.ajax({
-                            url:'verificationId.php',
-                            data:{
-                                'userInput':userInput,
-                                'index':index,
-                                'uri':uri
+                            url: 'verificationId.php',
+                            data: {
+                                'userInput': userInput,
+                                'index': index,
+                                'uri': uri
                             },
-                            method:'POST',
-                            dataType:'json',
-                            success:function(result){
-                                if(result.status == 'OK'){
+                            method: 'POST',
+                            dataType: 'json',
+                            success: function (result) {
+                                if (result.status == 'OK') {
                                     location.href = result.url;
-                                }else
+                                } else
                                     alert('ID錯誤!');
                             },
-                            error:function(err){
+                            error: function (err) {
                                 alert('錯誤，請稍後在試或連繫電競社社長')
                                 console.log(err);
                             }
@@ -160,11 +160,12 @@
                 });
             });
             $(window).resize(layout);
-            function layout(){
-                if($(document).width() <=480){
-                    $("header").css('height','70px').html('107校內技藝競賽 <br> 電子競技報名狀態');
-                }else{
-                    $("header").css('height','35px').html('107校內技藝競賽 - 電子競技報名狀態');
+
+            function layout() {
+                if ($(document).width() <= 480) {
+                    $("header").css('height', '70px').html('107校內技藝競賽 <br> 電子競技報名狀態');
+                } else {
+                    $("header").css('height', '35px').html('107校內技藝競賽 - 電子競技報名狀態');
                 }
             }
             layout();

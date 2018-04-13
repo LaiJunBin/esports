@@ -39,7 +39,11 @@
                 <td data-th="隊名"><?php echo $result['s_teamName'];?></td>
                 <td data-th="報名時間"><?php echo $result['s_date'];?></td>
                 <td data-th="操作">
-                    <button class="btn btn-<?php echo !$result['s_enable']?"success":"info";?> operationBtn" va="<?php echo $result['s_id'];?>"><?php echo !$result['s_enable']?"參加初賽":"取消參加";?></button>
+                    <?php if($result['s_run']==0){?>
+                        <button class="btn btn-<?php echo !$result['s_enable']?"success":"info";?> operationBtn" va="<?php echo $result['s_id'];?>"><?php echo !$result['s_enable']?"參加初賽":"取消參加";?></button>
+                    <?php }else{ ?>
+                        已開始比賽
+                    <?php }?>
                 </td>
             </tr>
     <?php }
