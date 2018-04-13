@@ -160,7 +160,7 @@
                 年級班級
                 <input type="text" class="form-control" name="_class" required> 隊名：
                 <input type="text" class="form-control" name="teamName" required> 隊長(座號姓名)：
-                <input type="text" class="form-control" name="leaderName" required> 隊長(遊戲暱稱)：
+                <input type="text" class="form-control" name="leaderName" required> 隊長(遊戲ID)：
                 <input type="text" class="form-control" name="leaderId" required> 隊員數量：
                 <select class="form-control" id="memberCount">
                     <option value="0" selected>0</option>
