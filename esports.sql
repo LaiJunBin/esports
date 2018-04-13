@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- 主機: 127.0.0.1
--- 產生時間： 2018-04-13 03:45:41
--- 伺服器版本: 10.1.31-MariaDB
--- PHP 版本： 7.2.4
+-- 產生時間： 2018-04-13 15:39:35
+-- 伺服器版本: 10.1.30-MariaDB
+-- PHP 版本： 7.2.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -41,7 +41,8 @@ CREATE TABLE `signup` (
   `s_phone` varchar(100) NOT NULL,
   `s_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `s_win` int(10) NOT NULL,
-  `s_enable` tinyint(1) NOT NULL DEFAULT '0'
+  `s_enable` tinyint(1) NOT NULL DEFAULT '0',
+  `s_run` int(10) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
