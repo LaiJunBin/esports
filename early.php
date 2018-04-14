@@ -59,7 +59,7 @@
             });
         }
         $("#operationBtnGroup button").hide();
-        if($("tr[va]:visible").length==6){
+        // if($("tr[va]:visible").length==6){
             var isRun = true;
             $("tr[va]:visible").each(function(){
                 if($(this).data('run')>0){
@@ -72,21 +72,59 @@
             else
                 $("#viewResultBtn").show();
 
-        }
+        // }
     }
     $("#randomBtn").click(function(){
-        var n = [];
+        if(confirm('當前名單中有'+$("tr[va]:visible").length +'隊，確定配對嗎?')){
+            var n = [];
+            $("tr[va]:visible").each(function(){
+                n.push($(this).attr("va"));
+            });
+            $.ajax({
+                url:'lottery.php',
+                method:'POST',
+                data:{
+                    keys:n
+                },
+                success:function(result){
+                    $("#operationBtnGroup button").hide();
+                    $("#viewResultBtn").show();
+                    alert('配對完成');
+                },
+                error:function(err){
+                    console.log(err);
+                }
+            });
+        }
+    });
+    $("#viewResultBtn").click(function(){
+        var title = $("#department").val();
+        var keys = [];
         $("tr[va]:visible").each(function(){
-            n.push($(this).attr("va"));
+            keys.push($(this).attr("va"));
         });
+        keys = '('+keys.join(',')+')';
+        // $("<form>").attr({
+        //     action:'showResult.php',
+        //     method:'POST'
+        // }).append($("<input>").attr({
+        //     type:'hidden',
+        //     name:'title',
+        //     value:title
+        // })).append($("<input>").attr({
+        //     type:'hidden',
+        //     name:'keys',
+        //     value:keys
+        // })).appendTo('body').submit();
         $.ajax({
-            url:'lottery.php',
+            url:'showResult.php',
             method:'POST',
             data:{
-                keys:n
+                title:title,
+                keys:keys
             },
             success:function(result){
-                console.log(result);
+                $("main").html(result);
             },
             error:function(err){
                 console.log(err);
