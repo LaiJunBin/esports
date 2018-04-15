@@ -63,7 +63,7 @@
 </head>
 <body>
     <div class="container">
-        <header>107校內技藝競賽 - 電子競技管理</header>
+        <header>106校內技藝競賽 - 電子競技管理</header>
         <a class="btn btn-default" href="index.html">回首頁</a>
         <div class="btn-group" id="menu">
             <button class="btn btn-default" uri='allSignUp.php'>全部名單</button>

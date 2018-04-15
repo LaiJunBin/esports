@@ -66,11 +66,13 @@
                     isRun = false;
                     return false;
                 }
-            })
-            if(isRun)
-                $("#randomBtn").show();
-            else
-                $("#viewResultBtn").show();
+            });
+            if($("tr[va]:visible").length>0){
+                if(isRun)
+                    $("#randomBtn").show();
+                else
+                    $("#viewResultBtn").show();
+            }
 
         // }
     }
@@ -100,10 +102,11 @@
     $("#viewResultBtn").click(function(){
         var title = $("#department").val();
         var keys = [];
+        
         $("tr[va]:visible").each(function(){
             keys.push($(this).attr("va"));
         });
-        keys = '('+keys.join(',')+')';
+        keysStr = '('+keys.join(',')+')';
         // $("<form>").attr({
         //     action:'showResult.php',
         //     method:'POST'
@@ -121,7 +124,8 @@
             method:'POST',
             data:{
                 title:title,
-                keys:keys
+                keys:keysStr,
+                keysArray:keys
             },
             success:function(result){
                 $("main").html(result);
