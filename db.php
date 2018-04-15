@@ -1,6 +1,6 @@
 <?php
     $user = 'root';
-    $pass = '';
+    $pass = '1234';
     $dbname = 'esports';
     $host = 'localhost';
     $dsn = "mysql:host=$host;dbname=$dbname";

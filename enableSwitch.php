@@ -12,6 +12,6 @@
     $query->bindValue(':enable',$enable);
     $query->bindValue(':id',$id);
     $query->execute();
-    $value = ['status'=>!$result['s_enable']?"參加初賽":"一般狀態",'btnText'=>$result['s_enable']?"參加初賽":"一般狀態",'color'=>$result['s_enable']?"success":"info"];
+    $value = ['status'=>!$result['s_enable']?"參加比賽":"一般狀態",'btnText'=>$result['s_enable']?"參加比賽":"一般狀態",'color'=>$result['s_enable']?"success":"info"];
     echo json_encode($value);
 ?>

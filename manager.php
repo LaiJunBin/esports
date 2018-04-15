@@ -67,8 +67,8 @@
         <a class="btn btn-default" href="index.html">回首頁</a>
         <div class="btn-group" id="menu">
             <button class="btn btn-default" uri='allSignUp.php'>全部名單</button>
-            <button class="btn btn-default" uri="early.php">初賽一名單</button>
-            <button class="btn btn-default" uri="Advanced.php">初賽二名單</button>
+            <button class="btn btn-default" uri="early.php?win=0">初賽一名單</button>
+            <button class="btn btn-default" uri="early.php?win=1">初賽二名單</button>
         </div>
         <main></main>
     </div>

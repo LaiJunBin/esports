@@ -12,11 +12,17 @@
 </select>
 <?php
     include_once('db.php');
-    $sql = 'select * from signup where s_enable ="'.'1'.'"';
+    $sql = 'select * from signup where s_enable ="'.'1'.'" and s_win = "'.($_GET['win']+1).'"';
+    $query = $db->query($sql);  
+    $vs_end = $query->fetch(PDO::FETCH_ASSOC);
+    $sql = 'select * from signup where s_enable ="'.'1'.'" and s_win >= "'.$_GET['win'].'"';
     $query = $db->query($sql);  
 ?>
 <table class="rwd-table">
 <tr>
+    <?php if($vs_end){ ?>
+        <th>狀態</th>
+    <?php } ?>
     <th>科系</th>
     <th>班級</th>
     <th>隊名</th>
@@ -30,6 +36,9 @@
             ?>
 
             <tr va="<?php echo $result['s_id'];?>" data-run="<?php echo $result['s_run'];?>">
+                <?php if($vs_end){ ?>
+                    <td data-th="狀態"><?php echo ($result['s_win']>=$_GET['win']+1)?"勝":"敗";?></td>
+                <?php } ?>
                 <td data-th="科系"><?php echo $result['s_department'];?></td>
                 <td data-th="班級"><?php echo $result['s_class'];?></td>
                 <td data-th="隊名"><?php echo $result['s_teamName'];?></td>
@@ -43,10 +52,13 @@
     ?>
 
 </table>
-<div id="operationBtnGroup">
-    <button class="btn btn-danger fill" style="display:none;" id="randomBtn">亂數配對(配對後不可更改)</button>
-    <button class="btn btn-success fill" style="display:none;" id="viewResultBtn">查看配對結果</button>
-</div>
+<?php 
+    if(!$vs_end){ ?>
+        <div id="operationBtnGroup">
+            <button class="btn btn-danger fill" style="display:none;" id="randomBtn">亂數配對(配對後不可更改)</button>
+            <button class="btn btn-success fill" style="display:none;" id="viewResultBtn">查看配對結果</button>
+        </div>
+    <?php } ?>
 <script>
     $("#department").change(filterDepartment);
     function filterDepartment(){

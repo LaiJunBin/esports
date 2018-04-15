@@ -33,14 +33,14 @@
         while($result = $query->fetch(PDO::FETCH_ASSOC)){ ?>
             
             <tr va="<?php echo $result['s_id'];?>">
-                <td data-th="狀態"><?php echo $result['s_enable']?"參加初賽":"一般狀態";?></td>
+                <td data-th="狀態"><?php echo $result['s_enable']?"參加比賽":"一般狀態";?></td>
                 <td data-th="科系"><?php echo $result['s_department'];?></td>
                 <td data-th="班級"><?php echo $result['s_class'];?></td>
                 <td data-th="隊名"><?php echo $result['s_teamName'];?></td>
                 <td data-th="報名時間"><?php echo $result['s_date'];?></td>
                 <td data-th="操作">
-                    <?php if($result['s_run']==0){?>
-                        <button class="btn btn-<?php echo !$result['s_enable']?"success":"info";?> operationBtn" va="<?php echo $result['s_id'];?>"><?php echo !$result['s_enable']?"參加初賽":"取消參加";?></button>
+                    <?php if($result['s_run']==0 && $result['s_win']==0){?>
+                        <button class="btn btn-<?php echo !$result['s_enable']?"success":"info";?> operationBtn" va="<?php echo $result['s_id'];?>"><?php echo !$result['s_enable']?"參加比賽":"取消參加";?></button>
                     <?php }else{ ?>
                         已開始比賽
                     <?php }?>
